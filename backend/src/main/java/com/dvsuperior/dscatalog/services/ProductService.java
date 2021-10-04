@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +39,7 @@ public class ProductService {
 	public ProductDTO findById(Long id){
 		Optional<Product> obj = repository.findById(id);
 		Product entity = obj.orElseThrow(() ->  new ResourceNotFoundException("Entidade não encontrada!"));
-		return new ProductDTO(entity, entity.getCategory());		
+		return new ProductDTO(entity, entity.getCategories());		
 	}
 
 	@Transactional
@@ -87,11 +86,11 @@ public class ProductService {
 		entity.setDate(dto.getDate());
 		entity.setImgUrl(dto.getImgUrl());
 		
-		entity.getCategory().clear();
+		entity.getCategories().clear();
 		
 		for(CategoryDTO catDto : dto.getCategories()) {
 			Category category = categoryRepository.getOne(catDto.getId());
-			entity.getCategory().add(category);
+			entity.getCategories().add(category);
 		}
 		
 		
