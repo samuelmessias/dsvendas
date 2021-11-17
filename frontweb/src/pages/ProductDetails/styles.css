@@ -122,3 +122,15 @@
   }
 
 }
+
+@media (min-width: 1400px) {
+  .img-container img {
+    height: 480px;
+    width: auto;
+  }
+
+  .description-container {
+    min-height: 502px;
+  }
+
+}
